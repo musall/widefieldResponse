@@ -523,10 +523,6 @@ for iRecs = 1 : nrRecs
         cTimeIdx = postStimTimeAxis > postStimTime(iAreas, iRecs) - (recoveryWindow/2) & postStimTimeAxis < postStimTime(iAreas, iRecs) + (recoveryWindow/2);
         latePostAmp(iAreas, iRecs) = nanmedian(postStimData(cTimeIdx))*100; %median amplitude of 5% smalles values as percentage
         
-        %add a vertical line to indicate the trough
-        nvline(preStimTime(iAreas, iRecs), 'g--');
-        nvline(postStimTime(iAreas, iRecs), 'r--');
-        
         % compute recovery time after the through
         winSteps = postStimTime(iAreas, iRecs)  : recoveryWindowShift : postStimTimeAxis(end)-recoveryWindow;
         cAmpData = nan(1, length(winSteps));
@@ -567,8 +563,10 @@ for iRecs = 1 : nrRecs
             end
         end
         
-        %add a vertical line to indicate the recovery time
         if iRecs == 1
+            %add a vertical line to indicate the trough and recovery time
+            nvline(preStimTime(iAreas, iRecs), 'g--');
+            nvline(postStimTime(iAreas, iRecs), 'r--');
             nvline(recoveryTime(iAreas, iRecs), 'b--');
             drawnow;
         end
